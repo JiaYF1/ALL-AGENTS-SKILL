@@ -1,0 +1,4 @@
+interface:
+  display_name: "All Agents Sync"
+  short_description: "Sync project docs across AI CLI tools"
+  default_prompt: "Use $all-agents-sync to initialize project documentation for all AI tools."
