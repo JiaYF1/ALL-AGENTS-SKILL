@@ -9,6 +9,7 @@ description: >
   documentation across multiple AI coding assistants. Also trigger when user asks
   to create or update CLAUDE.md + AGENTS.md + GEMINI.md together, or mentions
   keeping AI tool configs in sync.
+
 ---
 
 # All Agents Sync
@@ -32,11 +33,13 @@ When the user asks to initialize, follow these steps in order.
 Check the project root for these files: `ALL_AGENTS.md`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`, `sync-agents.sh`.
 
 **If ALL_AGENTS.md exists**: Ask the user —
+
 > "ALL_AGENTS.md already exists. Would you like me to (1) regenerate it from scratch, or (2) just sync it to the tool-specific files?"
 
 If they choose sync-only, skip to Step 4.
 
 **If CLAUDE.md/AGENTS.md/GEMINI.md exist but ALL_AGENTS.md does not**: Ask —
+
 > "Found existing tool docs but no ALL_AGENTS.md. Should I use the existing content as a starting point, or analyze the project fresh?"
 
 ### Step 2: Analyze the Project
@@ -50,6 +53,7 @@ Scan the codebase to gather project information. Read these files (if they exist
 - **Git info**: Recent commits for project context
 
 Focus on extracting:
+
 1. Project name and description
 2. Language and framework
 3. Build/dev/test commands
@@ -65,32 +69,44 @@ Fill in each section based on what you learned in Step 2. Write the result to
 `ALL_AGENTS.md` in the project root.
 
 Guidelines for generating good documentation:
+
 - Match the language of the project's existing docs (Chinese if README is in Chinese, etc.)
 - Be specific — include actual paths, real command names, concrete patterns
 - Keep it concise — this goes into the context window of three AI tools, so every line should earn its place
-- Include the tool-specific section markers if you have tool-specific notes to add:
+- **Always include the tool-specific maintenance instruction blocks** (see template). These are MANDATORY — they tell each AI tool "this file is auto-generated, edit ALL_AGENTS.md instead". Without them, the AI will edit the wrong file.
+
+Tool-specific section markers:
 
 ```markdown
 <!-- CLAUDE_ONLY -->
-Claude-specific instructions here (memory hints, response style, etc.)
+Content only for CLAUDE.md (Claude Code)
 <!-- /CLAUDE_ONLY -->
 
 <!-- CODEX_ONLY -->
-Codex-specific instructions here (sandbox config, etc.)
+Content only for AGENTS.md (Codex CLI)
 <!-- /CODEX_ONLY -->
 
 <!-- GEMINI_ONLY -->
-Gemini-specific instructions here (model prefs, etc.)
+Content only for GEMINI.md (Gemini CLI)
 <!-- /GEMINI_ONLY -->
 ```
 
 These markers control which content goes to which file during sync:
+
 - Content outside any marker → goes to all three files
 - `CLAUDE_ONLY` blocks → only to CLAUDE.md
 - `CODEX_ONLY` blocks → only to AGENTS.md
 - `GEMINI_ONLY` blocks → only to GEMINI.md
 - Markers inside code fences (```) are ignored by the sync script
 - Markers cannot be nested
+
+**Required blocks every ALL_AGENTS.md must contain** (copy from template):
+
+- `CLAUDE_ONLY` block: "本文件由 ALL_AGENTS.md 自动生成，请勿直接编辑" + how to update
+- `CODEX_ONLY` block: same in English
+- `GEMINI_ONLY` block: same in English
+
+These ensure each AI tool knows to edit `ALL_AGENTS.md` (not `CLAUDE.md`/`AGENTS.md`/`GEMINI.md`) and to run `./sync-agents.sh` afterward.
 
 ### Step 4: Copy Sync Script & Run Sync
 
@@ -113,6 +129,7 @@ and the appropriate content filtered by tool-specific markers.
 ### Step 5: Git Hook (Ask User First)
 
 Ask the user:
+
 > "Would you like to set up a git pre-commit hook so that changes to ALL_AGENTS.md
 > are automatically synced on commit? (You can always sync manually with `./sync-agents.sh`)"
 
@@ -120,6 +137,7 @@ If yes, detect the hook framework and install accordingly:
 
 **Check for husky** (`.husky/` directory):
 Add to `.husky/pre-commit`:
+
 ```bash
 # all-agents-sync: auto-sync on commit
 if [ -f "ALL_AGENTS.md" ] && [ -f "sync-agents.sh" ]; then
@@ -135,6 +153,7 @@ Add a pre-commit command for sync-agents.
 
 **Standalone hook** (no framework detected):
 Check if `.git/hooks/pre-commit` exists:
+
 - If yes: append the sync logic to the existing file
 - If no: create `.git/hooks/pre-commit` with:
 
@@ -163,7 +182,7 @@ Tell the user what was created and how to use it:
 > - `AGENTS.md` — Auto-synced for Codex CLI
 > - `GEMINI.md` — Auto-synced for Gemini CLI
 > - `sync-agents.sh` — Run manually to sync
-> {- Git pre-commit hook installed (if applicable)}
+>   {- Git pre-commit hook installed (if applicable)}
 >
 > **Daily workflow**: Edit only `ALL_AGENTS.md`. Sync happens on commit (or run `./sync-agents.sh`).
 
@@ -191,6 +210,7 @@ This skill works in Claude Code, Codex CLI, and Gemini CLI. To install in all to
 ```
 
 Or install to a specific tool:
+
 ```bash
 {baseDir}/scripts/install.sh claude
 {baseDir}/scripts/install.sh codex
