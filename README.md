@@ -10,13 +10,13 @@
 
 ```bash
 # Claude Code（原生 plugin）
-/plugin install all-agents-skill@your-github-username
+/plugin install JiaYF1@your-github-username
 
 # 通用安装器（支持 Claude Code / Codex / Gemini CLI / Cursor 等）
-npx openskills install your-github-username/all-agents-skill
+npx openskills install JiaYF1/all-agents-skill
 
 # 或用 Vercel skills CLI
-npx skills install your-github-username/all-agents-skill
+npx skills install JiaYF1/all-agents-skill
 ```
 
 ## 使用方式
