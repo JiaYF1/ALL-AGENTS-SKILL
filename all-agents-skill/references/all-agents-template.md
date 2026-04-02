@@ -48,8 +48,8 @@ API layer, error handling, module organization, etc.}
 
 ## Important Files
 
-| File | Purpose |
-|------|---------|
+| File    | Purpose   |
+| ------- | --------- |
 | {file1} | {purpose} |
 | {file2} | {purpose} |
 
@@ -67,19 +67,46 @@ API layer, error handling, module organization, etc.}
 {Steps to add typical new functionality in this project.}
 
 <!-- CLAUDE_ONLY -->
-## Claude-Specific Notes
+
+## 文档维护说明（AI Agent 必读）
+
+> 本文件由 `ALL_AGENTS.md` 自动生成，**请勿直接编辑此文件**。
+>
+> 如需更新项目文档（包括架构、命令、规范等任何章节）：
+>
+> 1. 编辑项目根目录的 `ALL_AGENTS.md`（唯一信息源）
+> 2. 运行 `./sync-agents.sh` 将改动同步到 `CLAUDE.md`、`AGENTS.md`、`GEMINI.md`
+> 3. 提交全部变更文件：`ALL_AGENTS.md`、`CLAUDE.md`、`AGENTS.md`、`GEMINI.md`
 
 {Claude Code specific instructions: memory hints, preferred tools, response style, etc.}
 <!-- /CLAUDE_ONLY -->
 
 <!-- CODEX_ONLY -->
-## Codex-Specific Notes
+
+## Documentation Maintenance (AI Agent — Required Reading)
+
+> This file is auto-generated from `ALL_AGENTS.md`. **Do not edit it directly.**
+>
+> To update any project documentation (architecture, commands, conventions, etc.):
+>
+> 1. Edit `ALL_AGENTS.md` in the project root (the single source of truth)
+> 2. Run `./sync-agents.sh` to sync changes to `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`
+> 3. Stage all changed files: `ALL_AGENTS.md`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`
 
 {Codex CLI specific instructions: sandbox environment, preferred patterns, etc.}
 <!-- /CODEX_ONLY -->
 
 <!-- GEMINI_ONLY -->
-## Gemini-Specific Notes
+
+## Documentation Maintenance (AI Agent — Required Reading)
+
+> This file is auto-generated from `ALL_AGENTS.md`. **Do not edit it directly.**
+>
+> To update any project documentation (architecture, commands, conventions, etc.):
+>
+> 1. Edit `ALL_AGENTS.md` in the project root (the single source of truth)
+> 2. Run `./sync-agents.sh` to sync changes to `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`
+> 3. Stage all changed files: `ALL_AGENTS.md`, `CLAUDE.md`, `AGENTS.md`, `GEMINI.md`
 
 {Gemini CLI specific instructions: model preferences, tool usage, etc.}
 <!-- /GEMINI_ONLY -->
